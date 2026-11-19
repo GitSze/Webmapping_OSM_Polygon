@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Der Dresdner Zwinger – Web Mapping</title>
+  <link rel="stylesheet" href="css/html5_style.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/esri-leaflet@3.0.1/dist/esri-leaflet.js" crossorigin=""></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo-link" href="https://www.bht-berlin.de/" aria-label="Berliner Hochschule für Technik">
+        <img src="img/bht-logo.png" alt="Logo der Berliner Hochschule für Technik">
+      </a>
+      <div class="header-title">
+        <p>Berliner Hochschule für Technik</p>
+        <span>GV Web Mapping I</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="navigation" aria-label="Hauptnavigation">
+    <div class="nav-inner">
+      <a href="index.html">Karte</a>
+      <a href="quellen.html">Quellen</a>
+      <a href="Impressum.html">Impressum</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="intro">
+      <div class="content-width">
+        <p class="eyebrow">Web Mapping · Dresden</p>
+        <h1>Der Dresdner Zwinger</h1>
+        <p>Der Zwinger ist ein bedeutender barocker Gebäudekomplex in der historischen Altstadt von Dresden. Die Anlage entstand im 18. Jahrhundert und ist heute ein bekanntes Wahrzeichen der Stadt. Das markierte Polygon in der Karte kennzeichnet den Bereich des Zwingers. Verschiebe und zoome die Karte, um die Umgebung zu erkunden.</p>
+      </div>
+    </section>
+
+    <div id="map"></div>
+    <p class="map-caption">Kartengrundlage: Esri World Topographic Map. © Esri und OpenStreetMap-Mitwirkende.</p>
+
+    <section class="content-section content-width">
+      <h2>Informationen zum Gebiet</h2>
+      <ul class="facts">
+        <li><strong>Erbauung:</strong> 1711 bis 1728 durch Matthäus Daniel Pöppelmann und Balthasar Permoser im Auftrag August des Starken; die Sempergalerie schloss die Anlage 1847 bis 1855.</li>
+        <li><strong>Wiederaufbau:</strong> Nach der Zerstörung 1945 wurde der Zwinger bis 1963 wiederaufgebaut.</li>
+        <li><strong>Heutige Nutzung:</strong> Museumskomplex mit der Gemäldegalerie Alte Meister, dem Mathematisch-Physikalischen Salon und der Porzellansammlung; im Sommer finden im Zwingerhof Konzerte statt.</li>
+        <li><strong>Größe:</strong> Der Zwingerhof misst 204 × 116 m; die Sempergalerie ist 127 m lang und fast 24 m hoch.</li>
+      </ul>
+      <p>Über den Kartenmarker und das Polygon lassen sich zusätzliche Informationen direkt in der Karte aufrufen. Die verwendeten Quellen findest du auf der <a href="quellen.html">Quellen-Seite</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-width">
+      <p>Studentische Arbeit, GV Web Mapping I, Fachbereich III, Berliner Hochschule für Technik.</p>
+      <p>Schrift: Inter, lizenziert unter der <a href="https://openfontlicense.org/">SIL Open Font License 1.1</a>.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Karte auf den Dresdner Zwinger ausrichten
+    const map = L.map('map').setView([51.0535, 13.7347], 16);
+
+    // Esri-Topographic-Grundkarte
+    L.esri.basemapLayer('Topographic').addTo(map);
+
+    // Umriss des Dresdner Zwingers
+    const zwinger = L.polygon([
+      [51.05343, 13.73223],
+      [51.05312, 13.73226],
+      [51.05205, 13.73420],
+      [51.05208, 13.73471],
+      [51.05279, 13.73569],
+      [51.05311, 13.73566],
+      [51.05417, 13.73372],
+      [51.05415, 13.73321]
+    ], {
+      color: '#b5122b',
+      weight: 3,
+      fillColor: '#d92945',
+      fillOpacity: 0.22
+    }).addTo(map);
+
+    zwinger.bindPopup('<strong>Dresdner Zwinger</strong><br>Markiertes Untersuchungsgebiet');
+
+    L.marker([51.0531, 13.7339])
+      .addTo(map)
+      .bindPopup('<strong>Dresdner Zwinger</strong><br>Barocke Schlossanlage in Dresden<br>' +
+                 '<a href="https://de.wikipedia.org/wiki/Zwinger_(Dresden)" target="_blank" rel="noopener">Wikipedia-Artikel</a>');
+
+    map.fitBounds(zwinger.getBounds(), { padding: [20, 20] });
+  </script>
+</body>
+</html>
